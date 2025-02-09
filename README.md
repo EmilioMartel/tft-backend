@@ -51,7 +51,7 @@ El backend recibe estructuras de grafos y genera una **organización visual ópt
 
 ### **2️⃣ Clonar el Repositorio**  
 ```bash
-git clone https://github.com/usuario/tft-backend.git
+git clone https://github.com/EmilioMartel/tft-backend.git
 cd tft-backend
 ```
 
