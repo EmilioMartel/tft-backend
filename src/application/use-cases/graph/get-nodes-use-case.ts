@@ -10,10 +10,13 @@ export interface UseCase {
 }
 
 export class GetNodesUseCase implements UseCase {
-  constructor(private fileService: FileService) {}
+  constructor(private fileService: FileService) {
+    
+  }
 
   execute(): { nodes: NodeEntity[]; links: LinkEntity[] } {
-    const filePath = path.join(__dirname, "../../../files/test.layout");
+    
+    const filePath = path.join(__dirname, "../../../../files/test.layout");
     const layoutData = this.fileService.readFile(filePath);
 
     const { nodes, links } = this.transformJsonToGraph(layoutData);
