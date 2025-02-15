@@ -1,16 +1,14 @@
 import { Router } from "express";
-import { GraphContoller } from "./controller";
+import { GraphController } from "./controller";
 
 
 export class GraphRoutes {
 
   static get routes(): Router {
     const router = Router();
-    const graphController = new GraphContoller();
+    const graphController = new GraphController();
 
     router.get( '/', graphController.getTodos );
-
-    
 
     return router;
   }
