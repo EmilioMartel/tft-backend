@@ -1,40 +1,25 @@
-import fs from "fs";
-import path from 'path';
+
+
 
 import { Request, Response } from "express";
+import { GetNodesUseCase } from "../../application/use-cases";
+import { FileService } from "../../infrastructure/services";
 
-export class GraphContoller {
+export class GraphController {
+  private getNodesUseCase: GetNodesUseCase;
 
-  public getTodos = (req: Request, res: Response) => {
+  constructor() {
+    const fileService = new FileService();
+    this.getNodesUseCase = new GetNodesUseCase(fileService);
+  }
 
-    const layoutFilePath = path.join(__dirname, "../../../files/test.layout");
+  public getTodos = (req: Request, res: Response): void => {
     try {
-      const rawData = fs.readFileSync(layoutFilePath, "utf-8");
-      const layoutData = JSON.parse(rawData);
-  
-      const nodes: any[] = [];
-      const links: any[] = [];
-  
-      Object.keys(layoutData).forEach((key, index) => {
-        const points = layoutData[key];
-  
-        points.forEach(([x, y]: [number, number], pointIndex: number) => {
-          nodes.push({ id: `${key}_${pointIndex}`, x, y });
-        });
-  
-        for (let i = 0; i < points.length - 1; i++) {
-          links.push({
-            source: `${key}_${i}`,
-            target: `${key}_${i + 1}`,
-          });
-        }
-      });
-  
-      res.json({ nodes, links });
+      const graphData = this.getNodesUseCase.execute();
+      res.json(graphData);
     } catch (error) {
-      console.error("Error al procesar el archivo:", error);
-      res.status(500).send("Error al procesar el archivo.");
+      console.error("Error al obtener el grafo:", error);
+      res.status(500).send("Error al obtener el grafo.");
     }
   };
-
 }
