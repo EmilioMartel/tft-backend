@@ -1,6 +1,6 @@
 import { FileService } from "../../../infrastructure/services";
 import { NodeEntity, LinkEntity } from "../../../domain/entities";
-import path from 'path';
+import { envs } from "../../../config/envs";
 
 export interface UseCase {
   execute(): { nodes: NodeEntity[]; links: LinkEntity[] };
@@ -10,8 +10,7 @@ export class GetNodesUseCase implements UseCase {
   constructor(private fileService: FileService) {}
 
   execute(): { nodes: NodeEntity[]; links: LinkEntity[] } {
-    const filePath = path.join(__dirname, "../../../../files/test.layout");
-    const fileData = this.fileService.readFile(filePath);
+    const fileData = this.fileService.readFile(envs.FILE_PATH);
 
     const { nodes, links } = this.transformJsonToGraph(fileData);
 

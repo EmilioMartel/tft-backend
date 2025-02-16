@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 export class FileService {
-  readFile(filePath: string): Promise<any> {
+  readFile(filePath: string) {
     try {
       const rawData = fs.readFileSync(filePath, "utf-8");
       if (!rawData) throw new Error("El archivo está vacío");
