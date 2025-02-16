@@ -80,7 +80,6 @@ export class GetNodesUseCase implements UseCase {
   }
 }
 
-// Excepción personalizada para coordenadas no válidas
 export class InvalidCoordinateException extends Error {
   constructor(groupId: string, index: number, x: any, y: any) {
     super(`Coordenada no válida en grupo "${groupId}", índice ${index}: [${x}, ${y}]`);
