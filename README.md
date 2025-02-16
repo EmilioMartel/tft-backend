@@ -32,6 +32,20 @@ El backend recibe estructuras de grafos y genera una **organización visual ópt
     ├───📂 config
     │       envs.ts    # Configuración de variables de entorno
     │
+    ├───📂 application
+    │   └───📂 use-cases
+    │           get-nodes.usecase.ts  # Caso de uso para obtener nodos del grafo
+    │           UseCase.ts            # Interfaz base para casos de uso
+    │
+    ├───📂 domain
+    │   └───📂 entities
+    │           node.entity.ts   # Entidad de Nodo en el dominio
+    │           link.entity.ts   # Entidad de Enlace en el dominio
+    │
+    ├───📂 infrastructure
+    │   └───📂 services
+    │           file.service.ts  # Servicio para manejar archivos
+    │
     └───📂 presentation
         │   routes.ts  # Definición de rutas principales
         │   server.ts  # Configuración del servidor Express
@@ -65,6 +79,7 @@ Crea un archivo **`.env`** en la raíz del proyecto y añade las siguientes vari
 ```ini
 PORT=3000
 NODE_ENV=development
+FILE_PATH=./files/test.layout
 ```
 
 ---
@@ -123,7 +138,6 @@ npm run start
 ### **🔹 Herramientas de Desarrollo**
 - **ts-node-dev** (recarga automática en desarrollo)  
 - **rimraf** (limpieza de archivos en compilación)  
-
 
 ---
 
