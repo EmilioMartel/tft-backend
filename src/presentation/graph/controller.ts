@@ -18,7 +18,6 @@ export class GraphController {
       const graphData = this.getNodesUseCase.execute();
       res.json(graphData);
     } catch (error) {
-      console.error("Error al obtener el grafo:", error);
       res.status(500).send("Error al obtener el grafo.");
     }
   };
@@ -35,7 +34,6 @@ export class GraphController {
       console.log("📁 Archivo recibido:", req.file);
       res.status(200).json({ message: "Archivo subido correctamente." });
     } catch (error) {
-      console.error("Error al subir el archivo:", error);
       res.status(500).json({ error: "Error al subir el archivo." });
     }
   };

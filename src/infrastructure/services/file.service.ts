@@ -28,7 +28,7 @@ export class FileService {
       const files = fs.readdirSync(finalPath);
 
       if (files.length === 0) {
-        throw new Error("No hay archivos en la carpeta 'uploads'.");
+        throw new Error(`No hay archivos en la carpeta '${envs.FILE_PATH}'.`);
       }
 
       const filePath = path.join(finalPath, files[0]);
