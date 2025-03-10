@@ -14,9 +14,32 @@ export class FileService {
   }
 
   async saveFile(file: Express.Multer.File): Promise<void> {
-    const finalPath = path.join(this.destinationPath, envs.FILE_PATH);   
-    const filePath = path.join(finalPath, file.originalname);
-    await fs.promises.rename(file.path, filePath);
+    const finalPath = path.join(this.destinationPath, envs.FILE_PATH);
+    
+    if (!fs.existsSync(finalPath)) {
+      await fs.promises.mkdir(finalPath, { recursive: true });
+    }
+    
+    const targetPath = path.join(finalPath, file.originalname);
+
+    const existingFiles = await fs.promises.readdir(finalPath);
+    for (const existingFile of existingFiles) {
+      if (existingFile !== file.originalname) {
+        const existingFilePath = path.join(finalPath, existingFile);
+        const stats = await fs.promises.stat(existingFilePath);
+        if (stats.isFile()) {
+          await fs.promises.unlink(existingFilePath);
+          console.log("🔥 Archivo eliminado:", existingFilePath);
+        }
+      }
+    }
+    
+    if (file.path !== targetPath) {
+      await fs.promises.rename(file.path, targetPath);
+      console.log("💾 Nuevo archivo guardado:", targetPath);
+    } else {
+      console.log("El archivo ya se encuentra en el destino:", targetPath);
+    }
   }
 
   readFile(filePath: string): any {
