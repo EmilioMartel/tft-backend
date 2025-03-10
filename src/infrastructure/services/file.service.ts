@@ -6,14 +6,15 @@ export class FileService {
 
   private destinationPath = path.join(__dirname, "../../..");
 
-  constructor() {}
-
-  async saveFile(file: Express.Multer.File): Promise<void> {
+  constructor() {
     const finalPath = path.join(this.destinationPath, envs.FILE_PATH);
     if (!fs.existsSync(finalPath)) {
       fs.promises.mkdir(finalPath, { recursive: true });
     }
-    
+  }
+
+  async saveFile(file: Express.Multer.File): Promise<void> {
+    const finalPath = path.join(this.destinationPath, envs.FILE_PATH);   
     const filePath = path.join(finalPath, file.originalname);
     await fs.promises.rename(file.path, filePath);
   }
