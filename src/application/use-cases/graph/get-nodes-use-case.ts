@@ -3,14 +3,14 @@ import { NodeEntity, LinkEntity } from "../../../domain/entities";
 import { envs } from "../../../config/envs";
 
 export interface UseCase {
-  execute(): { nodes: NodeEntity[];  };
+  execute(): Promise<{ nodes: NodeEntity[];  }>;
 }
 
 export class GetNodesUseCase implements UseCase {
   constructor(private fileService: FileService) {}
 
-  execute(): { nodes: NodeEntity[] } {
-    const fileData = this.fileService.readFile(envs.FILE_PATH);
+  async execute(): Promise<{ nodes: NodeEntity[] }> {
+    const fileData = await this.fileService.readFile();
     return this.transformJsonToGraph(fileData);
   }
 
