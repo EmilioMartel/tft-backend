@@ -5,10 +5,7 @@ export class BandageController {
     try {
       const response = await fetch("http://localhost:3001/api/bandage/info");
       const data = await response.json();
-      console.log("Bandage info:", data);
       const parsed = this.parseOutputPreservingUnits(data.stdout);
-      console.log(parsed);
-
       res.status(200).json(parsed);
     } catch (error) {
       console.error("Error fetching Bandage info:", error);
@@ -16,9 +13,7 @@ export class BandageController {
     }
   };
 
-  private parseOutputPreservingUnits(
-    text: string
-  ): Record<string, string | number> {
+  private parseOutputPreservingUnits(text: string): Record<string, string | number> {
     const result: Record<string, string | number> = {};
 
     const regex = /(.+?):\s*([^\s]+)/g;

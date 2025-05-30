@@ -1,6 +1,5 @@
 import { FileService } from "../../../infrastructure/services";
-import { NodeEntity, LinkEntity } from "../../../domain/entities";
-import { envs } from "../../../config/envs";
+import { NodeEntity } from "../../../domain/entities";
 
 export interface UseCase {
   execute(): Promise<{ nodes: NodeEntity[];  }>;
@@ -11,7 +10,6 @@ export class GetNodesUseCase implements UseCase {
 
   async execute(): Promise<{ nodes: NodeEntity[] }> {
     const fileData = await this.fileService.readFile();
-    console.log(`Leyendo archivo de layout: ${JSON.stringify(fileData)}`);
     return this.transformJsonToGraph(fileData);
   }
 
