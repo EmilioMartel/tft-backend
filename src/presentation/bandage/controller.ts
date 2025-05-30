@@ -18,6 +18,7 @@ export class BandageController {
       const response = await fetch("http://localhost:3001/api/bandage/layout");
       const data = await response.json();
       console.log("Bandage layout data:", data);
+      res.status(200).json(data);
     } catch (error) {
       console.error("Error fetching Bandage info:", error);
       res.status(500).json({ message: "Error retrieving Bandage info" });
