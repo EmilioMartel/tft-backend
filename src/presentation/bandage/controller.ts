@@ -13,6 +13,17 @@ export class BandageController {
     }
   };
 
+  public getLayout = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const response = await fetch("http://localhost:3001/api/bandage/layout");
+      const data = await response.json();
+      console.log("Bandage layout data:", data);
+    } catch (error) {
+      console.error("Error fetching Bandage info:", error);
+      res.status(500).json({ message: "Error retrieving Bandage info" });
+    }
+  };
+
   private parseOutputPreservingUnits(text: string): Record<string, string | number> {
     const result: Record<string, string | number> = {};
 

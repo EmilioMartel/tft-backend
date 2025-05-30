@@ -1,16 +1,6 @@
 import { Router } from "express";
 import { BandageController } from "./controller";
-import multer from "multer";
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
-const upload = multer({ storage });
 
 export class BandageRoutes {
   static get routes(): Router {
@@ -18,6 +8,7 @@ export class BandageRoutes {
     const bandageController = new BandageController();
 
     router.get('/', bandageController.getInfo);
+    router.get('/layout', bandageController.getLayout);
 
     return router;
   }
