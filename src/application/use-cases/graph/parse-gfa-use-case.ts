@@ -1,15 +1,24 @@
 // src/application/use-cases/graph/parse-gfa-use-case.ts
 import path from "path";
+import fs from "fs/promises";
 import { GfaModel, parseGfa } from "../../../infrastructure/services/gfa-parser.service";
 
 export class ParseGfaUseCase {
-  constructor() {}
+  constructor(
+    private readonly gfaDir = path.resolve(process.cwd(),"..", "gfa")
+  ) {}
 
   /**
-   * Devuelve el modelo GFA (segments + links + paths).
+   * Lee el único fichero .gfa en gfaDir y lo parsea.
    */
   async execute(): Promise<GfaModel> {
-    // f íj a la ruta real de tu archivo .gfa
-    return await parseGfa(path.join(process.cwd(),"..", "gfa", "test.gfa"));
+    const entries = await fs.readdir(this.gfaDir);
+    if (entries.length === 0) {
+      throw new Error(`No se encontró ningún archivo en ${this.gfaDir}`);
+    }
+
+    const [gfaFile] = entries;
+    const fullPath = path.join(this.gfaDir, gfaFile);
+    return await parseGfa(fullPath);
   }
 }
