@@ -34,6 +34,8 @@ export class GraphRoutes {
     
     router.post("/upload", upload.single("file"), graphController.uploadFile);
 
+    router.get("/parsed-gfa", graphController.getParsedGfa);
+
     return router;
   }
 }
