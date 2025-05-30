@@ -15,7 +15,7 @@ export interface Link {
   fromOrient: Orientation;
   to: string;
   toOrient: Orientation;
-  overlap: string; // p.e. "60M"
+  overlap: string;
 }
 
 export interface PathEntry {
@@ -48,7 +48,6 @@ export async function parseGfa(filePath: string): Promise<GfaModel> {
     const parts = line.split('\t');
     switch (parts[0]) {
       case 'S': {
-        // S   1   ACGT…   LN:i:100  KC:i:50
         const [ , id, seq, ...tags ] = parts;
         const lnTag = tags.find(t => t.startsWith('LN:i:'));
         const kcTag = tags.find(t => t.startsWith('KC:i:'));
@@ -61,7 +60,6 @@ export async function parseGfa(filePath: string): Promise<GfaModel> {
         break;
       }
       case 'L': {
-        // L  2  +  1  -  60M
         const [ , from, fOri, to, tOri, overlap ] = parts;
         links.push({
           from, fromOrient: fOri as Orientation,
@@ -71,7 +69,6 @@ export async function parseGfa(filePath: string): Promise<GfaModel> {
         break;
       }
       case 'P': {
-        // P  PATH_1  7-,14+,13-  *
         const [ , name, segField ] = parts;
         const nodes = segField.split(',').map(spec => {
           const m = spec.match(/^(\d+)([+-])$/);
@@ -82,7 +79,6 @@ export async function parseGfa(filePath: string): Promise<GfaModel> {
         break;
       }
       default:
-        // ignorar H, C, etc.
         break;
     }
   }
