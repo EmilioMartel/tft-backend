@@ -11,6 +11,7 @@ export class GetNodesUseCase implements UseCase {
 
   async execute(): Promise<{ nodes: NodeEntity[] }> {
     const fileData = await this.fileService.readFile();
+    console.log(`Leyendo archivo de layout: ${JSON.stringify(fileData)}`);
     return this.transformJsonToGraph(fileData);
   }
 
