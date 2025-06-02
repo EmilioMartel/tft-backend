@@ -1,4 +1,3 @@
-import { LinkEntity, NodeEntity } from "../../../domain/entities";
 import { FileService } from "../../../infrastructure/services";
 
 export interface UseCase<T, R> {
