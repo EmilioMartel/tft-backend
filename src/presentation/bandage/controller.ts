@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
+import { envs } from "../../config/envs";
 
 export class BandageController {
+  private readonly apiUrl: string = `${envs.HOST_NAME}:${envs.BANDAGE_PORT}/api/bandage`;
   public getInfo = async (req: Request, res: Response): Promise<void> => {
     try {
-      const response = await fetch("http://localhost:3001/api/bandage/info");
+      const response = await fetch(`${this.apiUrl}/info`);
       const data = await response.json();
       const parsed = this.parseOutputPreservingUnits(data.stdout);
       res.status(200).json(parsed);
@@ -15,7 +17,8 @@ export class BandageController {
 
   public getLayout = async (req: Request, res: Response): Promise<void> => {
     try {
-      const response = await fetch("http://localhost:3001/api/bandage/layout");
+      const url = `${this.apiUrl}/layout`;
+      const response = await fetch(url);
       const data = await response.json();
       console.log("Bandage layout data:", data);
       res.status(200).json(data);

@@ -5,7 +5,7 @@ import { GfaModel, parseGfa } from "../../../infrastructure/services/gfa-parser.
 
 export class ParseGfaUseCase {
   constructor(
-    private readonly gfaDir = path.resolve(process.cwd(),"..", "gfa")
+    private readonly gfaDir = path.resolve(process.cwd(),"gfa")
   ) {}
 
   /**

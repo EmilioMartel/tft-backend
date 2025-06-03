@@ -4,7 +4,7 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 
-const BASE_FILES_DIR = path.resolve(process.cwd(), "..");
+const BASE_FILES_DIR = path.resolve(process.cwd());
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {

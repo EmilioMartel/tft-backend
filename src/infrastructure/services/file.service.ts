@@ -4,9 +4,9 @@ import * as path from "path";
 import { envs } from "../../config/envs";
 
 export class FileService {
-  private rootDir = path.resolve(process.cwd(), "..");
+  private rootDir = path.resolve(process.cwd());
   private normalDir = path.resolve(this.rootDir, envs.FILE_PATH);
-  private gfaDir = path.resolve(this.rootDir, "gfa");
+  private gfaDir = path.resolve(this.rootDir,  "gfa");
 
   constructor() {
     this.ensureDir(this.normalDir);
@@ -17,17 +17,14 @@ export class FileService {
     if (!file?.originalname || !file.path) {
       throw new Error("Archivo inválido");
     }
-
     const targetDir = this.getTargetDir(file.originalname);
-    console.debug(`saveFile → targetDir = ${targetDir}`);
     await this.ensureDir(targetDir);
-
     await this.clearDirExcept(targetDir, file.originalname);
 
     const destPath = path.join(targetDir, file.originalname);
     if (path.resolve(file.path) !== path.resolve(destPath)) {
       await fs.rename(file.path, destPath);
-    } 
+    }
   }
 
   public async readFile(): Promise<any> {
