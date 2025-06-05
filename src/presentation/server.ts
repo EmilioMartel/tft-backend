@@ -34,7 +34,7 @@ export class Server {
       res.send("¡Hola desde el Backend!");
     });
 
-    this.app.listen(this.port, () => {
+    this.app.listen(this.port,  () => {
       console.log(`Server running on port ${ this.port }`);
     })
     

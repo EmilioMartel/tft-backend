@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { envs } from "../../config/envs";
 
 export class BandageController {
-  private readonly apiUrl: string = `${envs.HOST_NAME}:${envs.BANDAGE_PORT}/api/bandage`;
+  private readonly apiUrl: string = `${envs.HOST_NAME}:${envs.PORT}/api/bandage`;
   public getInfo = async (req: Request, res: Response): Promise<void> => {
     try {
       const response = await fetch(`${this.apiUrl}/info`);
@@ -20,7 +20,6 @@ export class BandageController {
       const url = `${this.apiUrl}/layout`;
       const response = await fetch(url);
       const data = await response.json();
-      console.log("Bandage layout data:", data);
       res.status(200).json(data);
     } catch (error) {
       console.error("Error fetching Bandage info:", error);
