@@ -130,6 +130,20 @@ Si algo no funciona como esperas:
 
 ---
 
+## **🔧 Docker**
+
+### **Construcción**
+```bash
+docker build -t emmartel/tft-backend .
+```
+
+O con `docker-compose`:
+```bash
+docker-compose up --build
+```
+
+---
+
 ## **📌 Información Adicional**
 📘 **Trabajo de Fin de Título (TFT01)**  
 Este proyecto forma parte del **TFT01** en colaboración con el **Instituto Tecnológico de Canarias (ITC)**.  
