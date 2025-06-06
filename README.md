@@ -13,46 +13,36 @@ El backend recibe estructuras de grafos y genera una **organización visual ópt
 
 ---
 
-## **📂 Estructura del Proyecto**  
+## **📂 Estructura del Proyecto**
+  
 ```
 📂 tft-backend
 │   .env               # Variables de entorno
-│   .gitignore         # Ignorar archivos innecesarios en Git
-│   package-lock.json  # Control de versiones de dependencias
-│   package.json       # Dependencias y scripts de ejecución
-│   README.md          # Documentación del proyecto
-│   tsconfig.json      # Configuración de TypeScript
-│
-├───📂 files
-│       test.layout    # Archivo de prueba para el procesamiento de grafos
+│   .env.template      # Plantilla con valores listos para evaluación
+│   package.json       # Dependencias y scripts
+│   tsconfig.json      # Configuración TypeScript
+│   README.md          # Documentación
 │
 └───📂 src
-    │   app.ts         # Punto de entrada principal
-    │
-    ├───📂 config
-    │       envs.ts    # Configuración de variables de entorno
-    │
     ├───📂 application
     │   └───📂 use-cases
-    │           get-nodes.usecase.ts  # Caso de uso para obtener nodos del grafo
-    │           UseCase.ts            # Interfaz base para casos de uso
+    │       └───📂 graph         # Casos de uso relacionados con grafos
+    │           usecase.ts
+    │
+    ├───📂 config
+    │       envs.ts              # Variables de entorno centralizadas
     │
     ├───📂 domain
-    │   └───📂 entities
-    │           node.entity.ts   # Entidad de Nodo en el dominio
-    │           link.entity.ts   # Entidad de Enlace en el dominio
-    │
+    │   └───📂 entities          # Entidades del grafo
     ├───📂 infrastructure
     │   └───📂 services
-    │           file.service.ts  # Servicio para manejar archivos
+    │           file.service.ts   # servicio para leer y generar ficheros
     │
     └───📂 presentation
-        │   routes.ts  # Definición de rutas principales
-        │   server.ts  # Configuración del servidor Express
-        │
-        └───📂 graph
-                controller.ts  # Controlador para la gestión de grafos
-                routes.ts      # Rutas específicas para el módulo de grafos
+        ├───📂 bandage          # Controlador y rutas para integración con Bandage
+        └───📂 graph            # Controlador y rutas para visualización de grafos
+            controller.ts
+            routes.ts
 ```
 
 ---
@@ -75,12 +65,13 @@ npm install
 ```
 
 ### **4️⃣ Configurar Variables de Entorno**  
-Crea un archivo **`.env`** en la raíz del proyecto y añade las siguientes variables:  
-```ini
-PORT=3000
-NODE_ENV=development
-FILE_PATH=./files/test.layout
+Renombra el archivo `.env.template` a `.env` para habilitar la configuración del entorno:
+
+```bash
+mv .env.template .env
 ```
+
+Este archivo ya contiene los valores necesarios para el despliegue y funcionamiento del backend. No es necesario realizar modificaciones adicionales. Esta configuración ha sido preparada específicamente para facilitar la replicación del proyecto durante la evaluación del TFT.
 
 ---
 
@@ -110,34 +101,12 @@ npm run start
 
 | Método | Endpoint          | Descripción                        |
 |--------|------------------|----------------------------------|
-| GET    | `/graph`         | Obtiene la estructura del grafo  |
+| GET    | `api/graph/`         | Obtiene la estructura del grafo  |
+| POST   | `api/graph/upload`   | Carga el .gfa  |
+| GET    | `api/graph/parsed-gfa`         | modela el gfa para tipar su contenido   |
+| GET    | `api/bandage/info`         | Obtiene información del grafo  |
+| GET    | `api/bandage/layout`         | Genera el .layout a partir del .gfa  |
 
-**Ejemplo de respuesta `/graph`**:  
-```json
-{
-  "nodes": [
-    { "id": "A", "x": 100, "y": 150 },
-    { "id": "B", "x": 200, "y": 250 }
-  ],
-  "links": [
-    { "source": "A", "target": "B" }
-  ]
-}
-```
-
----
-
-## **📌 Tecnologías Usadas**  
-
-### **🔹 Backend**
-- **Node.js** + **Express** 🚀  
-- **TypeScript** ✅  
-- **Dotenv** (gestión de variables de entorno)  
-- **Cors** (manejo de CORS)  
-
-### **🔹 Herramientas de Desarrollo**
-- **ts-node-dev** (recarga automática en desarrollo)  
-- **rimraf** (limpieza de archivos en compilación)  
 
 ---
 
@@ -173,4 +142,3 @@ Más información:
 ## **👨‍💻 Autor y Contribuciones**
 📌 **Autor**: Emilio Martel Díaz  
 🔗 **Colaboradores**: ITC, Universidad de Las Palmas de Gran Canaria (ULPGC)  
-
